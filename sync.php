@@ -2,12 +2,15 @@
 require 'vendor/autoload.php';
 
 // read config
-$envFile = '.env';
+$envFile = __DIR__ . '/.env';
 if ( ! file_exists($envFile)) {
     output($envFile . ' file not found');
 }
-$env = parse_ini_file('.env');
-$recordFile = $env['STORAGE_PATH'] . '/lasttimestamp';
+$env = parse_ini_file($envFile);
+
+$storagePath = __DIR__ . '/storage';
+$recordFile = $storagePath . '/lasttimestamp';
+$pictureFileSuffix = $storagePath . '/img_';
 
 // fetch one tweet
 $twitter = new Twitter(
@@ -45,7 +48,7 @@ $client = new SaeTClientV2(
 $message = $text . ' ' . $statusUrl;
 $picture = false;
 if ($mediaUrl) {
-    $picture = sprintf('%s/img_%s', $env['STORAGE_PATH'], $status->id_str);
+    $picture = $pictureFileSuffix . $status->id_str;
     file_put_contents($picture, file_get_contents($mediaUrl));
 }
 $ret = $client->share($message, $picture);
