@@ -21,6 +21,6 @@ This Project can share Twitter to Weibo
 
 2. Add the script to crontab
 ```bash
-    0 * * * * /usr/bin/php /home/popfeng/dev/tweebo/sync.php >/tmp/tweebo.log 2>&1
+    0 * * * * /usr/bin/php /home/popfeng/dev/tweebo/sync.php >>/tmp/tweebo.log 2>&1
     systemctl restart crontab
 ```
