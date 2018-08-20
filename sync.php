@@ -22,6 +22,14 @@ $twitter = new Twitter(
 $statuses = $twitter->load(Twitter::ME, 1);
 $status = current($statuses);
 
+if ( ! isset($status->text)) {
+    output('no tweets');
+}
+
+if ( ! empty($status->entities->user_mentions)) {
+    output('no tweets');
+}
+
 $lastTime = (int) @file_get_contents($recordFile);
 if (strtotime($status->created_at) <= $lastTime) {
     output('no tweets');
